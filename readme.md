@@ -1,4 +1,6 @@
-all you need do is to edit this with the necessary parameters, install dependenceis and start
+# UNISWAP SNIPER
+
+1. Create a **.env** file and pase the following variables
 
 ```
 RPC_URL = "https://base-rpc.publicnode.com"
@@ -18,3 +20,6 @@ ROUTER_CA = "0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24"
 FACTORY_CA = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
 #---------------------------------------------------------
 ```
+
+2. Edit the varaibles with your preferred parameters... _Double Check!_ 😊
+3. run `npm start` to start the script.
