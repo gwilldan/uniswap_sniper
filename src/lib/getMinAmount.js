@@ -1,5 +1,4 @@
 import { ethers, Contract, JsonRpcProvider } from "ethers";
-import { checkDecimals } from "./checks.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,22 +19,13 @@ const router = new Contract(
 	provider
 );
 
-const prepareAndSwap = async (wethReserve, tokenReserve) => {
+const getMinAmount = async (wethReserve, tokenReserve) => {
 	const amountIn = ethers.parseEther(ETH_BUY);
 
-	const decimals = await checkDecimals(TOKEN_CA);
 	const amountOut = await router.getAmountOut(
 		amountIn,
 		wethReserve,
 		tokenReserve
-	);
-
-	const formattedAmount = ethers.formatUnits(amountOut, decimals);
-	console.log(
-		amountOut,
-		formattedAmount,
-		typeof amountOut,
-		typeof formattedAmount
 	);
 
 	const minAmount = amountOut - (amountOut * BigInt(SLIPPAGE)) / 100n;
@@ -43,4 +33,4 @@ const prepareAndSwap = async (wethReserve, tokenReserve) => {
 	return minAmount;
 };
 
-export default prepareAndSwap;
+export default getMinAmount;

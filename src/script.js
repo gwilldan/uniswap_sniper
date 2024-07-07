@@ -1,6 +1,6 @@
 import { ethers, JsonRpcProvider, Contract, Wallet } from "ethers";
 import { checkReserve } from "./lib/checks.js";
-import prepareAndSwap from "./lib/prepareAndSwap.js";
+import getMinAmount from "./lib/getMinAmount.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -101,33 +101,34 @@ const router = new Contract(
 const main = async () => {
 	console.log("Starting....");
 
-	Factory.on("PairCreated", async (token0, token1, pair, id) => {
-		console.log(new Date(), "NEW PAIR...", {
-			base: token0,
-			quote: token1,
-			pair: pair,
-			id: id,
-		});
+	// Factory.on("PairCreated", async (token0, token1, pair, id) => {
+	// 	console.log(new Date(), "NEW PAIR...", {
+	// 		base: token0,
+	// 		quote: token1,
+	// 		pair: pair,
+	// 		id: id,
+	// 	});
 
-		if (token0 == addresses.WETH) {
-			// prepareSwap(token0, token1, pair);
-			const { tokenReserve, wethReserve } = await checkReserve(pair);
-			console.log("Eth in the pool is ", ethers.formatEther(wethReserve));
-			prepareAndSwap(wethReserve, tokenReserve);
-		}
+	// 	if (token0 == addresses.WETH) {
+	// 		// prepareSwap(token0, token1, pair);
+	// 		const { tokenReserve, wethReserve } = await checkReserve(pair);
+	// 		console.log("Eth in the pool is ", ethers.formatEther(wethReserve));
+	// 		getMinAmount(wethReserve, tokenReserve);
+	// 	}
 
-		if (token1 == addresses.WETH) {
-			// console.log("Pair spoted");
-			// prepareSwap(token1, token0, pair, "reverse");
-			const { tokenReserve, wethReserve } = await checkReserve(pair, "reverse");
-			console.log("Eth in the pool is ", ethers.formatEther(wethReserve));
-			prepareAndSwap(wethReserve, tokenReserve);
-		}
-	});
+	// 	if (token1 == addresses.WETH) {
+	// 		// console.log("Pair spoted");
+	// 		// prepareSwap(token1, token0, pair, "reverse");
+	// 		const { tokenReserve, wethReserve } = await checkReserve(pair, "reverse");
+	// 		console.log("Eth in the pool is ", ethers.formatEther(wethReserve));
+	// 		getMinAmount(wethReserve, tokenReserve);
+	// 	}
+	// });
+
+	const minAmount = await getMinAmount(
+		"0x4200000000000000000000000000000000000006",
+		"0x65665436a1b6a5cAB489344Dad4CE475CFce9D02"
+	);
+	console.log("Min amount", minAmount);
 };
-// main();
-
-prepareAndSwap(
-	"0x4200000000000000000000000000000000000006",
-	"0x65665436a1b6a5cAB489344Dad4CE475CFce9D02"
-);
+main();
