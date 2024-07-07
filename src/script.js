@@ -14,7 +14,7 @@ const WETH_CA = process.env.WETH_CA;
 const provider = new JsonRpcProvider(RPC_URL);
 const wallet = new Wallet(PRIVATE_KEY, provider);
 
-const amountIn = ethers.parseUnits(ETH_BUY, "ether"); // the intended amount of purchase in eth
+const amountIn = ethers.parseEther(ETH_BUY); // the intended amount of purchase in eth
 
 const Factory = new Contract(
 	FACTORY_CA,
