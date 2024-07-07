@@ -1,22 +1,24 @@
-import { ethers, Contract, JsonRpcProvider } from "ethers";
+import { ethers, Contract, JsonRpcProvider, Wallet } from "ethers";
 import dotenv from "dotenv";
 dotenv.config();
 
-const TOKEN_CA = process.env.TOKEN_CA;
+// const TOKEN_CA = process.env.TOKEN_CA;
 const ETH_BUY = process.env.ETH_BUY;
 const ROUTER_CA = process.env.ROUTER_CA;
 const RPC_URL = process.env.RPC_URL;
 const SLIPPAGE = process.env.SLIPPAGE;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 const provider = new JsonRpcProvider(RPC_URL);
+const wallet = new Wallet(PRIVATE_KEY, provider);
 
-const router = new Contract(
+export const router = new Contract(
 	ROUTER_CA,
 	[
 		"function getAmountOut(uint256 amountIn, uint256 reserveIn, uint256 reserveOut) external pure returns (uint256 amountOut)",
 		"function swapExactETHForTokens(uint256 amountOutMin, address[] calldata path, address to, uint256 deadline) external payable returns (uint256[] memory amounts)",
 	],
-	provider
+	wallet
 );
 
 const getMinAmount = async (wethReserve, tokenReserve) => {
