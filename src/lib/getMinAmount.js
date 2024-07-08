@@ -9,6 +9,12 @@ const RPC_URL = process.env.RPC_URL;
 const SLIPPAGE = process.env.SLIPPAGE;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
+if (!RPC_URL || !ROUTER_CA || !ETH_BUY || !PRIVATE_KEY || !SLIPPAGE) {
+	throw new Error(
+		"Please set all required environment variables in the .env file"
+	);
+}
+
 const provider = new JsonRpcProvider(RPC_URL);
 const wallet = new Wallet(PRIVATE_KEY, provider);
 

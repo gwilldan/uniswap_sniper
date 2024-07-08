@@ -14,17 +14,32 @@ const WETH_CA = process.env.WETH_CA;
 const provider = new JsonRpcProvider(RPC_URL);
 const wallet = new Wallet(PRIVATE_KEY, provider);
 
+if (
+	!RPC_URL ||
+	!TOKEN_CA ||
+	!ETH_BUY ||
+	!FACTORY_CA ||
+	!WETH_CA ||
+	!PRIVATE_KEY
+) {
+	throw new Error(
+		"Please set all required environment variables in the .env file"
+	);
+}
+
 const amountIn = ethers.parseEther(ETH_BUY); // the intended amount of purchase in eth
 
 const Factory = new Contract(
 	FACTORY_CA,
 	[
 		"event PairCreated(address indexed token0, address indexed token1, address pair, uint)",
+		"function getPair(address , address ) external view returns (address )",
 	],
-	wallet
+	provider
 );
 
 const swap = async (weth, tokenOut, minAmount) => {
+	console.log("Pair spotted");
 	console.log("Initiating buy...");
 	try {
 		const tx = await router.swapExactETHForTokens(
