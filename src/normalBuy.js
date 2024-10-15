@@ -3,13 +3,15 @@ import { checkReserve } from "./lib/checks.js";
 import getMinAmount, { router } from "./lib/getMinAmount.js";
 import dotenv from "dotenv";
 dotenv.config();
+import {
+	ETH_BUY,
+	FACTORY_CA,
+	TOKEN_CA,
+	WETH_CA,
+	RPC_URL,
+} from "../constants.js";
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const RPC_URL = process.env.RPC_URL;
-const TOKEN_CA = process.env.TOKEN_CA;
-const ETH_BUY = process.env.ETH_BUY;
-const FACTORY_CA = process.env.FACTORY_CA;
-const WETH_CA = process.env.WETH_CA;
 
 const provider = new JsonRpcProvider(RPC_URL);
 const wallet = new Wallet(PRIVATE_KEY, provider);

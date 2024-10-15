@@ -1,22 +1,8 @@
-import { ethers, Contract, JsonRpcProvider, Wallet } from "ethers";
-import dotenv from "dotenv";
-dotenv.config();
-
-// const TOKEN_CA = process.env.TOKEN_CA;
-const ETH_BUY = process.env.ETH_BUY;
-const ROUTER_CA = process.env.ROUTER_CA;
-const RPC_URL = process.env.RPC_URL;
-const SLIPPAGE = process.env.SLIPPAGE;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-
-if (!RPC_URL || !ROUTER_CA || !ETH_BUY || !PRIVATE_KEY || !SLIPPAGE) {
-	throw new Error(
-		"Please set all required environment variables in the .env file"
-	);
-}
+import { Contract, JsonRpcProvider, Wallet, parseEther } from "ethers";
+import { ETH_BUY, ROUTER_CA, SLIPPAGE, RPC_URL } from "../../constants.js";
 
 const provider = new JsonRpcProvider(RPC_URL);
-const wallet = new Wallet(PRIVATE_KEY, provider);
+const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
 
 export const router = new Contract(
 	ROUTER_CA,
@@ -28,7 +14,7 @@ export const router = new Contract(
 );
 
 const getMinAmount = async (wethReserve, tokenReserve) => {
-	const amountIn = ethers.parseEther(ETH_BUY);
+	const amountIn = parseEther(ETH_BUY);
 
 	const amountOut = await router.getAmountOut(
 		amountIn,

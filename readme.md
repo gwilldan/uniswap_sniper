@@ -23,6 +23,7 @@ FACTORY_CA = 0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6
 ```
 
 2. Edit the varaibles with your preferred parameters... _Double Check!_ 😊
-3. run `npm start` to start the script.
+3. run `npm install` to install dependencies
+4. run `npm run snipe` to start the sniper script or `npm run normal` to start the normal buy instant script.
 
 ## ENJOY

@@ -1,8 +1,7 @@
 import { Contract, JsonRpcProvider } from "ethers";
 import dotenv from "dotenv";
 dotenv.config();
-
-const RPC_URL = process.env.RPC_URL;
+import { RPC_URL } from "../../constants.js";
 
 const provider = new JsonRpcProvider(RPC_URL);
 
